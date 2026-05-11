@@ -17,7 +17,13 @@ payload_type=$(classify_payload "$payload")
 
 devices=$(kdec_list_devices || true)
 if [[ -z $devices ]]; then
-  printf 'No KDE Connect device reachable\n'
+  unreachable=$(kdec_list_paired_unreachable || true)
+  if [[ -n $unreachable ]]; then
+    names=$(printf '%s' "$unreachable" | paste -sd ',' - | sed 's/,/, /g')
+    printf 'No KDE Connect device reachable (paired but offline: %s)\n' "$names"
+  else
+    printf 'No KDE Connect device reachable\n'
+  fi
   exit 0
 fi
 

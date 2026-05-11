@@ -43,6 +43,10 @@ classify_payload() {
 # List paired & reachable devices, one per line: "<id>\t<name>".
 # Output is empty when no devices are reachable.
 #
+# Sending to a paired-but-not-reachable device fails with "No such object
+# path .../share" because the share plugin is only registered while the
+# device is actively connected. So we filter to paired+reachable here.
+#
 # The macOS KDE Connect daemon is started on demand by the first CLI call,
 # which often returns "0 devices found" while it warms up. We retry briefly
 # until it responds with a device list (or the budget runs out).
@@ -51,15 +55,32 @@ kdec_list_devices() {
   local raw out i
   for (( i=0; i<6; i++ )); do
     raw=$("$KDECONNECT_CLI" --list-available --id-name-only 2>/dev/null || true)
+    # Device IDs are 32 hex chars on Android/desktop; iOS uses an
+    # underscore-separated UUID (e.g. 583305bd_64fe_43ef_af5a_e508c7581736).
+    # Match any leading hex/underscore token, then split on the first space.
     out=$(printf '%s\n' "$raw" \
-      | awk 'match($0, /^[0-9a-f]{32} /) {
-          id = substr($0, 1, 32)
-          name = substr($0, 34)
+      | awk 'match($0, /^[0-9a-f_]+ /) {
+          id = substr($0, 1, RLENGTH - 1)
+          name = substr($0, RLENGTH + 1)
           printf "%s\t%s\n", id, name
         }')
     [[ -n $out ]] && { printf '%s\n' "$out"; return; }
     sleep 0.25
   done
+}
+
+# List paired-but-not-reachable device names, one per line.
+# Used to give the user a more helpful error when nothing is reachable.
+kdec_list_paired_unreachable() {
+  [[ -x "$KDECONNECT_CLI" ]] || return 0
+  # Full --list-devices output annotates each device with (paired) or
+  # (reachable). We want devices marked (paired) only — they're trusted
+  # but the Mac daemon doesn't currently see them on the network.
+  "$KDECONNECT_CLI" --list-devices 2>/dev/null \
+    | awk -F': ' '/\(paired\)$/ {
+        sub(/^- /, "", $1)
+        print $1
+      }'
 }
 
 # KDE Connect's macOS CLI silently drops files whose names contain U+202F
