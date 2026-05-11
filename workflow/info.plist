@@ -9,7 +9,7 @@
 	<key>createdby</key>
 	<string>Leon Vogt</string>
 	<key>description</key>
-	<string>Send the current selection, file, or URL to a paired KDE Connect device via Alfred's Universal Action.</string>
+	<string>Send text, files, URL's or the clipboard to paired KDE Connect devices.</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
