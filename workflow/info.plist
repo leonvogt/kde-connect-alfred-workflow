@@ -15,7 +15,7 @@
 	<key>name</key>
 	<string>KDE Connect</string>
 	<key>version</key>
-	<string>0.3.0</string>
+	<string>0.1.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/leonvogt/kde-connect-alfred-workflow</string>
 	<key>readme</key>
