@@ -2,14 +2,11 @@
 
 # KDE Connect Alfred Workflow
 
-**Send text, files, URL's or the clipboard to paired KDE Connect devices.**
+**Send text, files, URLs or the clipboard to paired KDE Connect devices.**
 
-![icon](workflow/icon.png)
 </div>
 
-## Usage
-
-Invoke Alfred's Universal Action (default `⌥⌘\`), and pick "Send via KDE Connect".
+Send a selection, file, or URL to a paired KDE Connect device via the Universal Action (default <kbd>⌥</kbd><kbd>⌘</kbd><kbd>\\</kbd>).
 
 ![Universal Action](workflow/screenshot_1.png)
 

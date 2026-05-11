@@ -9,7 +9,7 @@
 	<key>createdby</key>
 	<string>Leon Vogt</string>
 	<key>description</key>
-	<string>Send text, files, URL's or the clipboard to paired KDE Connect devices.</string>
+	<string>Send text, files, URLs or the clipboard to paired KDE Connect devices.</string>
 	<key>disabled</key>
 	<false/>
 	<key>name</key>
@@ -19,19 +19,13 @@
 	<key>webaddress</key>
 	<string>https://github.com/leonvogt/kde-connect-alfred-workflow</string>
 	<key>readme</key>
-	<string>
+	<string>## Usage
 
-# KDE Connect
-
-Send text, files, URL's or the clipboard to paired KDE Connect devices.
-
-## Usage
-
-Invoke Alfred's Universal Action (default `⌥⌘\`), and pick "Send via KDE Connect".
+Send a selection, file, or URL to a paired KDE Connect device via the Universal Action.
 
 ![Universal Action](screenshot_1.png)
 
-Send the current clipboard via the `kdec` keyword:
+Alternatively, send the current clipboard via the `kdec`.
 
 ![Keyword](screenshot_2.png)
 
