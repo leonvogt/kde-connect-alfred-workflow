@@ -21,10 +21,18 @@ and double-click it.
 
 ## Usage
 
+**Universal Action**
+
 1. Select any text, file, or URL in any macOS app (or copy something to the clipboard).
 2. Invoke Alfred's Universal Action (default: `⌥⌘\`).
 3. Pick **Send via KDE Connect**.
 4. Single device → it sends immediately. Multiple devices → pick one.
+
+**Keyword (clipboard)**
+
+1. Copy text or a URL to the clipboard.
+2. Open Alfred, type `kdec`, press Enter.
+3. Same device routing as above.
 
 A notification confirms success or reports the failure.
 
@@ -43,11 +51,12 @@ make package   # build dist/KDE-Connect.alfredworkflow
 make clean     # remove dist/
 ```
 
-The three scripts under `workflow/bin/` can be run by hand for debugging:
+The scripts under `workflow/bin/` can be run by hand for debugging:
 
 ```sh
 cd workflow
 bash bin/dispatch.sh "https://example.com"
+bash bin/dispatch_clipboard.sh
 bash bin/choose_device.sh "/path/to/file.png"
 KDECONNECT_CLI="/Applications/KDE Connect.app/Contents/MacOS/kdeconnect-cli" \
   payload="hi" payload_type=text device_id=<id> device_name=Pixel \

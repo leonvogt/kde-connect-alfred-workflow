@@ -15,7 +15,7 @@
 	<key>name</key>
 	<string>KDE Connect</string>
 	<key>version</key>
-	<string>0.2.0</string>
+	<string>0.3.0</string>
 	<key>webaddress</key>
 	<string>https://github.com/leonvogt/kde-connect-alfred-workflow</string>
 	<key>readme</key>
@@ -55,6 +55,32 @@ If exactly one device is reachable it is used automatically; otherwise a chooser
 	</array>
 	<key>connections</key>
 	<dict>
+		<key>00508439-FD70-47A1-BA81-E4225D49A610</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9EE8AC1F-045E-4C24-B352-15FF6E37763E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>6A86B457-EBC5-43A3-A7E7-A810BC97C69D</key>
 		<array>
 			<dict>
@@ -123,6 +149,52 @@ If exactly one device is reachable it is used automatically; otherwise a chooser
 	</dict>
 	<key>objects</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>2</integer>
+				<key>keyword</key>
+				<string>kdec</string>
+				<key>subtext</key>
+				<string>Send the current clipboard text to a paired device</string>
+				<key>text</key>
+				<string>Send clipboard via KDE Connect</string>
+				<key>title</key>
+				<string>Send clipboard via KDE Connect</string>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.keyword</string>
+			<key>uid</key>
+			<string>00508439-FD70-47A1-BA81-E4225D49A610</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>concurrently</key>
+				<false/>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>"$alfred_preferences/workflows/$alfred_workflow_uid/bin/dispatch_clipboard.sh"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.action.script</string>
+			<key>uid</key>
+			<string>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</string>
+			<key>version</key>
+			<integer>2</integer>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -276,6 +348,24 @@ If exactly one device is reachable it is used automatically; otherwise a chooser
 	</array>
 	<key>uidata</key>
 	<dict>
+		<key>00508439-FD70-47A1-BA81-E4225D49A610</key>
+		<dict>
+			<key>note</key>
+			<string>Keyword: read clipboard text and send</string>
+			<key>xpos</key>
+			<real>40</real>
+			<key>ypos</key>
+			<real>40</real>
+		</dict>
+		<key>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</key>
+		<dict>
+			<key>note</key>
+			<string>Read pbpaste, then forward to dispatch.sh</string>
+			<key>xpos</key>
+			<real>260</real>
+			<key>ypos</key>
+			<real>40</real>
+		</dict>
 		<key>6A86B457-EBC5-43A3-A7E7-A810BC97C69D</key>
 		<dict>
 			<key>note</key>
