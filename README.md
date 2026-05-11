@@ -2,7 +2,7 @@
 
 # KDE Connect Alfred Workflow
 
-**Send text, files, and URLs to a paired KDE Connect device.**
+**Send text, files, URL's or the clipboard to paired KDE Connect devices.**
 
 ![icon](workflow/icon.png)
 </div>

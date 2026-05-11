@@ -7,7 +7,7 @@
 	<key>category</key>
 	<string>Tools</string>
 	<key>createdby</key>
-	<string>Leon</string>
+	<string>Leon Vogt</string>
 	<key>description</key>
 	<string>Send the current selection, file, or URL to a paired KDE Connect device via Alfred's Universal Action.</string>
 	<key>disabled</key>
@@ -19,9 +19,27 @@
 	<key>webaddress</key>
 	<string>https://github.com/leonvogt/kde-connect-alfred-workflow</string>
 	<key>readme</key>
-	<string>Universal Action that sends text, files, or URLs to a paired KDE Connect device.
+	<string>
 
-If exactly one device is reachable it is used automatically; otherwise a chooser appears. Requires the macOS build of KDE Connect (https://kdeconnect.kde.org). The path to `kdeconnect-cli` is configurable below.</string>
+# KDE Connect
+
+Send text, files, URL's or the clipboard to paired KDE Connect devices.
+
+## Usage
+
+Invoke Alfred's Universal Action (default `⌥⌘\`), and pick "Send via KDE Connect".
+
+![Universal Action](screenshot_1.png)
+
+Send the current clipboard via the `kdec` keyword:
+
+![Keyword](screenshot_2.png)
+
+If exactly one device is reachable it receives the payload immediately; otherwise Alfred shows a chooser.
+
+## Requirements
+
+The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Applications`, and a paired device on the same network.</string>
 	<key>variables</key>
 	<dict>
 		<key>KDECONNECT_CLI</key>
@@ -46,7 +64,7 @@ If exactly one device is reachable it is used automatically; otherwise a chooser
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>Alfred keyword used to send the current clipboard to a KDE Connect device.</string>
+			<string>Sends the clipboard to a KDE Connect device</string>
 			<key>label</key>
 			<string>Keyword</string>
 			<key>type</key>
@@ -67,7 +85,7 @@ If exactly one device is reachable it is used automatically; otherwise a chooser
 				<true/>
 			</dict>
 			<key>description</key>
-			<string>Absolute path to the kdeconnect-cli binary shipped inside KDE Connect.app.</string>
+			<string>Path to the kdeconnect-cli binary inside KDE Connect.app</string>
 			<key>label</key>
 			<string>kdeconnect-cli path</string>
 			<key>type</key>
