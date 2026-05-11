@@ -26,11 +26,34 @@ If exactly one device is reachable it is used automatically; otherwise a chooser
 	<dict>
 		<key>KDECONNECT_CLI</key>
 		<string>/Applications/KDE Connect.app/Contents/MacOS/kdeconnect-cli</string>
+		<key>KDEC_KEYWORD</key>
+		<string>kdec</string>
 	</dict>
 	<key>variablesdontexport</key>
 	<array/>
 	<key>userconfigurationconfig</key>
 	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>kdec</string>
+				<key>placeholder</key>
+				<string>kdec</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Alfred keyword used to send the current clipboard to a KDE Connect device.</string>
+			<key>label</key>
+			<string>Keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>KDEC_KEYWORD</string>
+		</dict>
 		<dict>
 			<key>config</key>
 			<dict>
@@ -168,7 +191,7 @@ If exactly one device is reachable it is used automatically; otherwise a chooser
 				<key>argumenttype</key>
 				<integer>2</integer>
 				<key>keyword</key>
-				<string>kdec</string>
+				<string>{var:KDEC_KEYWORD}</string>
 				<key>subtext</key>
 				<string>Send the current clipboard text to a paired device</string>
 				<key>text</key>

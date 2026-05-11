@@ -31,16 +31,18 @@ and double-click it.
 **Keyword (clipboard)**
 
 1. Copy text or a URL to the clipboard.
-2. Open Alfred, type `kdec`, press Enter.
+2. Open Alfred, type `kdec` (configurable — see below), press Enter.
 3. Same device routing as above.
 
 A notification confirms success or reports the failure.
 
 ## Configuration
 
-Open the workflow in Alfred preferences and use the configuration button. The
-only setting is the path to `kdeconnect-cli`; the default points at the binary
-inside `KDE Connect.app`.
+Open the workflow in Alfred preferences and use the configuration button:
+
+- **Keyword** — Alfred keyword for the clipboard action (default `kdec`).
+- **kdeconnect-cli path** — absolute path to the CLI binary; the default
+  points at the binary inside `KDE Connect.app`.
 
 ## Development
 
