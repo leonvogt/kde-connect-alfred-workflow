@@ -1,11 +1,11 @@
+<div align="center">
+
 # KDE Connect Alfred Workflow
 
-Send text, files, and URLs to a paired KDE Connect device from Alfred's
-[Universal Actions](https://www.alfredapp.com/help/features/universal-actions/).
-If exactly one device is reachable the workflow sends to it directly;
-otherwise it shows a chooser.
+**Send text, files, and URLs to a paired KDE Connect device.**
 
 ![icon](workflow/icon.png)
+</div>
 
 ## Requirements
 
