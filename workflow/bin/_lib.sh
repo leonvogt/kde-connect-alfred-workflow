@@ -126,7 +126,11 @@ kdec_send() {
     url)  _kdec_one --share      "$payload" || rc=1 ;;
     file)
       local path send_path tmp_dir
-      while IFS= read -r path; do
+      # `|| [[ -n $path ]]` processes the final entry too: `read` returns
+      # non-zero on the last line because tr emits no trailing newline, but
+      # it still populates $path. Without this, single files (and the last of
+      # several) are silently dropped while kdec_send still reports success.
+      while IFS= read -r path || [[ -n $path ]]; do
         [[ -z $path ]] && continue
         send_path=$(_kdec_normalize_path "$path")
         _kdec_one --share "$send_path" || rc=1
