@@ -32,12 +32,7 @@ count=$(printf '%s\n' "$devices" | wc -l | tr -d ' ')
 if (( count == 1 )); then
   device_id=${devices%%$'\t'*}
   device_name=${devices#*$'\t'}
-  if reason=$(kdec_send "$device_id" "$payload" "$payload_type"); then
-    printf 'Sent to %s\n' "$device_name"
-  else
-    printf 'Failed to send to %s: %s\n' "$device_name" "$reason"
-    exit 1
-  fi
+  kdec_send_and_report "$device_id" "$payload" "$payload_type" "$device_name" || exit 1
   exit 0
 fi
 

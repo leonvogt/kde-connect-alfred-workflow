@@ -17,9 +17,4 @@ payload_type=${payload_type-text}
 device_id=${device_id-}
 device_name=${device_name-$device_id}
 
-if reason=$(kdec_send "$device_id" "$payload" "$payload_type"); then
-  printf 'Sent to %s\n' "$device_name"
-else
-  printf 'Failed to send to %s: %s\n' "$device_name" "$reason"
-  exit 1
-fi
+kdec_send_and_report "$device_id" "$payload" "$payload_type" "$device_name" || exit 1

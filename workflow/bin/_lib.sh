@@ -95,8 +95,8 @@ _kdec_normalize_path() {
   local safe_name tmp_dir
   safe_name=${path##*/}
   safe_name=${safe_name//$'\xe2\x80\xaf'/ }
-  tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/kdec.XXXXXX")
-  cp "$path" "$tmp_dir/$safe_name"
+  tmp_dir=$(mktemp -d "${TMPDIR:-/tmp}/kdec.XXXXXX") || return 1
+  cp "$path" "$tmp_dir/$safe_name" || return 1
   printf '%s' "$tmp_dir/$safe_name"
 }
 
@@ -104,14 +104,19 @@ _kdec_normalize_path() {
 #   $1 device_id
 #   $2 payload (text, url, or tab-separated file list)
 #   $3 payload_type (text|url|file)
-# On failure, prints a cleaned-up reason to stdout and returns 1.
+# Prints exactly one stdout line:
+#   - on success (returns 0): a short descriptor of what was sent, or empty
+#     ("screenshot.png", "3 files"; empty for text/url)
+#   - on failure (returns 1): a cleaned-up reason
+# The CLI returns 0 even for non-existent files, so the file branch validates
+# existence itself instead of trusting the exit code.
 kdec_send() {
   local device_id=$1 payload=$2 payload_type=$3
   [[ -n $device_id ]] || { printf 'missing device id'; return 1; }
   [[ -x "$KDECONNECT_CLI" ]] || { printf 'kdeconnect-cli not found at: %s' "$KDECONNECT_CLI"; return 1; }
 
   local -a errors=()
-  local stderr rc=0
+  local stderr rc=0 success_desc=""
 
   _kdec_one() {
     local flag=$1 arg=$2
@@ -125,23 +130,48 @@ kdec_send() {
     text) _kdec_one --share-text "$payload" || rc=1 ;;
     url)  _kdec_one --share      "$payload" || rc=1 ;;
     file)
-      local path send_path tmp_dir
+      local path send_path name total=0 sent=0
+      local -a failures=()
       # `|| [[ -n $path ]]` processes the final entry too: `read` returns
       # non-zero on the last line because tr emits no trailing newline, but
       # it still populates $path. Without this, single files (and the last of
       # several) are silently dropped while kdec_send still reports success.
       while IFS= read -r path || [[ -n $path ]]; do
         [[ -z $path ]] && continue
-        send_path=$(_kdec_normalize_path "$path")
-        _kdec_one --share "$send_path" || rc=1
+        (( ++total ))
+        name=${path##*/}
+        if [[ ! -e $path ]]; then
+          failures+=("$name: not found"); rc=1; continue
+        fi
+        send_path=$(_kdec_normalize_path "$path") || {
+          failures+=("$name: could not stage copy"); rc=1; continue
+        }
+        if _kdec_one --share "$send_path"; then
+          (( ++sent ))
+        else
+          failures+=("$name: ${stderr:-share failed}"); rc=1
+        fi
       done < <(printf '%s' "$payload" | tr '\t' '\n')
+
+      if (( rc != 0 )); then
+        # Strict: any failed file fails the whole send. Name the offenders.
+        local joined; joined=$(IFS='; '; printf '%s' "${failures[*]}")
+        if (( total > 1 )); then
+          printf '%d of %d failed: %s' "${#failures[@]}" "$total" "$joined"
+        else
+          printf '%s' "$joined"
+        fi
+        return 1
+      fi
+
+      if (( sent == 1 )); then success_desc=$name; else success_desc="$sent files"; fi
       ;;
     *) printf 'unknown payload type: %s' "$payload_type"; return 1 ;;
   esac
 
   if (( rc != 0 )); then
-    # The first stderr line is usually noisy DBus activation chatter;
-    # the real cause is on the last non-noisy line.
+    # text/url failure: the first stderr line is usually noisy DBus activation
+    # chatter; the real cause is on the last non-noisy line.
     local reason
     reason=$(printf '%s\n' "${errors[0]}" \
       | grep -v 'error activating kdeconnectd' \
@@ -150,4 +180,25 @@ kdec_send() {
     printf '%s' "$reason"
     return 1
   fi
+
+  printf '%s' "$success_desc"
+}
+
+# Send a payload and emit the final human-readable line for the Notification
+# node. Echoes the line; returns the underlying send exit code.
+#   $1 device_id  $2 payload  $3 payload_type  $4 device_name
+kdec_send_and_report() {
+  local device_id=$1 payload=$2 payload_type=$3 device_name=$4
+  local out rc=0
+  out=$(kdec_send "$device_id" "$payload" "$payload_type") || rc=$?
+  if (( rc == 0 )); then
+    if [[ -n $out ]]; then
+      printf 'Sent %s to %s\n' "$out" "$device_name"
+    else
+      printf 'Sent to %s\n' "$device_name"
+    fi
+  else
+    printf 'Failed to send to %s: %s\n' "$device_name" "$out"
+  fi
+  return $rc
 }
