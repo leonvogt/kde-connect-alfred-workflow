@@ -6,88 +6,6 @@
 	<string>com.leonvogt.kde-connect</string>
 	<key>category</key>
 	<string>Tools</string>
-	<key>createdby</key>
-	<string>Leon Vogt</string>
-	<key>description</key>
-	<string>Send text, files, URLs or the clipboard to paired KDE Connect devices.</string>
-	<key>disabled</key>
-	<false/>
-	<key>name</key>
-	<string>KDE Connect</string>
-	<key>version</key>
-	<string>0.2.0</string>
-	<key>webaddress</key>
-	<string>https://github.com/leonvogt/kde-connect-alfred-workflow</string>
-	<key>readme</key>
-	<string>## Usage
-
-Send a selection, file, or URL to a paired KDE Connect device via the Universal Action.
-
-![Universal Action](screenshot_1.png)
-
-Alternatively, send the current clipboard via the `kdec`.
-
-![Keyword](screenshot_2.png)
-
-If exactly one device is reachable it receives the payload immediately; otherwise Alfred shows a chooser.
-
-## Requirements
-
-The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Applications`, and a paired device on the same network.</string>
-	<key>variables</key>
-	<dict>
-		<key>KDECONNECT_CLI</key>
-		<string>/Applications/KDE Connect.app/Contents/MacOS/kdeconnect-cli</string>
-		<key>KDEC_KEYWORD</key>
-		<string>kdec</string>
-	</dict>
-	<key>variablesdontexport</key>
-	<array/>
-	<key>userconfigurationconfig</key>
-	<array>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>default</key>
-				<string>kdec</string>
-				<key>placeholder</key>
-				<string>kdec</string>
-				<key>required</key>
-				<true/>
-				<key>trim</key>
-				<true/>
-			</dict>
-			<key>description</key>
-			<string>Sends the clipboard to a KDE Connect device</string>
-			<key>label</key>
-			<string>Keyword</string>
-			<key>type</key>
-			<string>textfield</string>
-			<key>variable</key>
-			<string>KDEC_KEYWORD</string>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>default</key>
-				<string>/Applications/KDE Connect.app/Contents/MacOS/kdeconnect-cli</string>
-				<key>placeholder</key>
-				<string></string>
-				<key>required</key>
-				<true/>
-				<key>trim</key>
-				<true/>
-			</dict>
-			<key>description</key>
-			<string>Path to the kdeconnect-cli binary inside KDE Connect.app</string>
-			<key>label</key>
-			<string>kdeconnect-cli path</string>
-			<key>type</key>
-			<string>textfield</string>
-			<key>variable</key>
-			<string>KDECONNECT_CLI</string>
-		</dict>
-	</array>
 	<key>connections</key>
 	<dict>
 		<key>00508439-FD70-47A1-BA81-E4225D49A610</key>
@@ -95,32 +13,6 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 			<dict>
 				<key>destinationuid</key>
 				<string>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>9EE8AC1F-045E-4C24-B352-15FF6E37763E</string>
-				<key>modifiers</key>
-				<integer>0</integer>
-				<key>modifiersubtext</key>
-				<string></string>
-				<key>vitoclose</key>
-				<false/>
-			</dict>
-		</array>
-		<key>6A86B457-EBC5-43A3-A7E7-A810BC97C69D</key>
-		<array>
-			<dict>
-				<key>destinationuid</key>
-				<string>34E3C782-A421-4E89-B449-EA804A1DAE3A</string>
 				<key>modifiers</key>
 				<integer>0</integer>
 				<key>modifiersubtext</key>
@@ -155,6 +47,32 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 				<false/>
 			</dict>
 		</array>
+		<key>62CDCF35-A9A5-4CD3-9E85-E80BE03E7725</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>9EE8AC1F-045E-4C24-B352-15FF6E37763E</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
+		<key>6A86B457-EBC5-43A3-A7E7-A810BC97C69D</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>34E3C782-A421-4E89-B449-EA804A1DAE3A</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+				<key>vitoclose</key>
+				<false/>
+			</dict>
+		</array>
 		<key>B1E0C3A4-1111-4F00-9000-000000000001</key>
 		<array>
 			<dict>
@@ -181,7 +99,7 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 				<false/>
 			</dict>
 		</array>
-		<key>62CDCF35-A9A5-4CD3-9E85-E80BE03E7725</key>
+		<key>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</key>
 		<array>
 			<dict>
 				<key>destinationuid</key>
@@ -195,6 +113,14 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 			</dict>
 		</array>
 	</dict>
+	<key>createdby</key>
+	<string>Leon Vogt</string>
+	<key>description</key>
+	<string>Send text, files, URLs or the clipboard to paired KDE Connect devices.</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>KDE Connect</string>
 	<key>objects</key>
 	<array>
 		<dict>
@@ -208,8 +134,6 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 				<string>Send the current clipboard text to a paired device</string>
 				<key>text</key>
 				<string>Send clipboard via KDE Connect</string>
-				<key>title</key>
-				<string>Send clipboard via KDE Connect</string>
 				<key>withspace</key>
 				<false/>
 			</dict>
@@ -219,6 +143,55 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 			<string>00508439-FD70-47A1-BA81-E4225D49A610</string>
 			<key>version</key>
 			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>alfredfiltersresults</key>
+				<true/>
+				<key>alfredfiltersresultsmatchmode</key>
+				<integer>0</integer>
+				<key>argumenttreatemptyqueryasnil</key>
+				<true/>
+				<key>argumenttrimmode</key>
+				<integer>0</integer>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>keyword</key>
+				<string>{var:KDED_KEYWORD}</string>
+				<key>queuedelaycustom</key>
+				<integer>3</integer>
+				<key>queuedelayimmediatelyinitially</key>
+				<true/>
+				<key>queuedelaymode</key>
+				<integer>0</integer>
+				<key>queuemode</key>
+				<integer>1</integer>
+				<key>runningsubtext</key>
+				<string>Refreshing KDE Connect devices…</string>
+				<key>script</key>
+				<string>"$alfred_preferences/workflows/$alfred_workflow_uid/bin/list_devices.sh"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>subtext</key>
+				<string>Show KDE Connect devices and their connection status</string>
+				<key>title</key>
+				<string>List KDE Connect devices</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<false/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>A2BBC587-A28B-441C-94A0-AE68668ED795</string>
+			<key>version</key>
+			<integer>3</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -246,27 +219,6 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>acceptsfiles</key>
-				<true/>
-				<key>acceptsmulti</key>
-				<integer>1</integer>
-				<key>acceptstext</key>
-				<true/>
-				<key>acceptsurls</key>
-				<true/>
-				<key>name</key>
-				<string>Send via KDE Connect</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.trigger.universalaction</string>
-			<key>uid</key>
-			<string>6A86B457-EBC5-43A3-A7E7-A810BC97C69D</string>
-			<key>version</key>
-			<integer>1</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
 				<key>concurrently</key>
 				<false/>
 				<key>escaping</key>
@@ -290,8 +242,50 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argumenttype</key>
+				<key>acceptsfiles</key>
+				<true/>
+				<key>acceptsmulti</key>
 				<integer>1</integer>
+				<key>acceptstext</key>
+				<true/>
+				<key>acceptsurls</key>
+				<true/>
+				<key>name</key>
+				<string>Send via KDE Connect</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.trigger.universalaction</string>
+			<key>uid</key>
+			<string>6A86B457-EBC5-43A3-A7E7-A810BC97C69D</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<true/>
+				<key>removeextension</key>
+				<false/>
+				<key>text</key>
+				<string>{query}</string>
+				<key>title</key>
+				<string>KDE Connect</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>9EE8AC1F-045E-4C24-B352-15FF6E37763E</string>
+			<key>version</key>
+			<integer>1</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>availableviaurlhandler</key>
+				<false/>
 				<key>triggerid</key>
 				<string>choose</string>
 			</dict>
@@ -305,26 +299,25 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>argument</key>
-				<string></string>
-				<key>passthroughargument</key>
+				<key>concurrently</key>
 				<false/>
-				<key>variables</key>
-				<array>
-					<dict>
-						<key>name</key>
-						<string>payload</string>
-						<key>value</key>
-						<string>{query}</string>
-					</dict>
-				</array>
+				<key>escaping</key>
+				<integer>102</integer>
+				<key>script</key>
+				<string>"$alfred_preferences/workflows/$alfred_workflow_uid/bin/send.sh"</string>
+				<key>scriptargtype</key>
+				<integer>1</integer>
+				<key>scriptfile</key>
+				<string></string>
+				<key>type</key>
+				<integer>0</integer>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.utility.argument</string>
+			<string>alfred.workflow.action.script</string>
 			<key>uid</key>
-			<string>B1E0C3A4-1111-4F00-9000-000000000001</string>
+			<string>62CDCF35-A9A5-4CD3-9E85-E80BE03E7725</string>
 			<key>version</key>
-			<integer>1</integer>
+			<integer>2</integer>
 		</dict>
 		<dict>
 			<key>config</key>
@@ -376,48 +369,35 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 		<dict>
 			<key>config</key>
 			<dict>
-				<key>concurrently</key>
-				<false/>
-				<key>escaping</key>
-				<integer>102</integer>
-				<key>script</key>
-				<string>"$alfred_preferences/workflows/$alfred_workflow_uid/bin/send.sh"</string>
-				<key>scriptargtype</key>
-				<integer>1</integer>
-				<key>scriptfile</key>
+				<key>argument</key>
 				<string></string>
-				<key>type</key>
-				<integer>0</integer>
+				<key>passthroughargument</key>
+				<false/>
 			</dict>
 			<key>type</key>
-			<string>alfred.workflow.action.script</string>
+			<string>alfred.workflow.utility.argument</string>
 			<key>uid</key>
-			<string>62CDCF35-A9A5-4CD3-9E85-E80BE03E7725</string>
-			<key>version</key>
-			<integer>2</integer>
-		</dict>
-		<dict>
-			<key>config</key>
-			<dict>
-				<key>lastpathcomponent</key>
-				<false/>
-				<key>onlyshowifquerypopulated</key>
-				<true/>
-				<key>removeextension</key>
-				<false/>
-				<key>text</key>
-				<string>{query}</string>
-				<key>title</key>
-				<string>KDE Connect</string>
-			</dict>
-			<key>type</key>
-			<string>alfred.workflow.output.notification</string>
-			<key>uid</key>
-			<string>9EE8AC1F-045E-4C24-B352-15FF6E37763E</string>
+			<string>B1E0C3A4-1111-4F00-9000-000000000001</string>
 			<key>version</key>
 			<integer>1</integer>
 		</dict>
 	</array>
+	<key>readme</key>
+	<string>## Usage
+
+Send a selection, file, or URL to a paired KDE Connect device via the Universal Action.
+
+![Universal Action](screenshot_1.png)
+
+Alternatively, send the current clipboard via the `kdec`.
+
+![Keyword](screenshot_2.png)
+
+If exactly one device is reachable it receives the payload immediately; otherwise Alfred shows a chooser.
+
+## Requirements
+
+The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Applications`, and a paired device on the same network.</string>
 	<key>uidata</key>
 	<dict>
 		<key>00508439-FD70-47A1-BA81-E4225D49A610</key>
@@ -428,24 +408,6 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 			<real>40</real>
 			<key>ypos</key>
 			<real>40</real>
-		</dict>
-		<key>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</key>
-		<dict>
-			<key>note</key>
-			<string>Read pbpaste, then forward to dispatch.sh</string>
-			<key>xpos</key>
-			<real>260</real>
-			<key>ypos</key>
-			<real>40</real>
-		</dict>
-		<key>6A86B457-EBC5-43A3-A7E7-A810BC97C69D</key>
-		<dict>
-			<key>note</key>
-			<string>Selection, file, or URL from anywhere in macOS</string>
-			<key>xpos</key>
-			<real>40</real>
-			<key>ypos</key>
-			<real>180</real>
 		</dict>
 		<key>34E3C782-A421-4E89-B449-EA804A1DAE3A</key>
 		<dict>
@@ -465,6 +427,40 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 			<key>ypos</key>
 			<real>420</real>
 		</dict>
+		<key>62CDCF35-A9A5-4CD3-9E85-E80BE03E7725</key>
+		<dict>
+			<key>note</key>
+			<string>Send to selected device</string>
+			<key>xpos</key>
+			<real>700</real>
+			<key>ypos</key>
+			<real>420</real>
+		</dict>
+		<key>6A86B457-EBC5-43A3-A7E7-A810BC97C69D</key>
+		<dict>
+			<key>note</key>
+			<string>Selection, file, or URL from anywhere in macOS</string>
+			<key>xpos</key>
+			<real>40</real>
+			<key>ypos</key>
+			<real>180</real>
+		</dict>
+		<key>9EE8AC1F-045E-4C24-B352-15FF6E37763E</key>
+		<dict>
+			<key>note</key>
+			<string>Show result</string>
+			<key>xpos</key>
+			<real>720</real>
+			<key>ypos</key>
+			<real>300</real>
+		</dict>
+		<key>A2BBC587-A28B-441C-94A0-AE68668ED795</key>
+		<dict>
+			<key>xpos</key>
+			<real>545</real>
+			<key>ypos</key>
+			<real>40</real>
+		</dict>
 		<key>B1E0C3A4-1111-4F00-9000-000000000001</key>
 		<dict>
 			<key>note</key>
@@ -483,24 +479,96 @@ The macOS build of [KDE Connect](https://kdeconnect.kde.org) installed in `/Appl
 			<key>ypos</key>
 			<real>420</real>
 		</dict>
-		<key>62CDCF35-A9A5-4CD3-9E85-E80BE03E7725</key>
+		<key>ECF2EC44-B73E-4F3A-9E07-3D97BEEBAF40</key>
 		<dict>
 			<key>note</key>
-			<string>Send to selected device</string>
+			<string>Read pbpaste, then forward to dispatch.sh</string>
 			<key>xpos</key>
-			<real>700</real>
+			<real>260</real>
 			<key>ypos</key>
-			<real>420</real>
-		</dict>
-		<key>9EE8AC1F-045E-4C24-B352-15FF6E37763E</key>
-		<dict>
-			<key>note</key>
-			<string>Show result</string>
-			<key>xpos</key>
-			<real>720</real>
-			<key>ypos</key>
-			<real>300</real>
+			<real>40</real>
 		</dict>
 	</dict>
+	<key>userconfigurationconfig</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>kdec</string>
+				<key>placeholder</key>
+				<string>kdec</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Sends the clipboard to a KDE Connect device</string>
+			<key>label</key>
+			<string>Keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>KDEC_KEYWORD</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>kded</string>
+				<key>placeholder</key>
+				<string>kded</string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Lists KDE Connect devices with their connection status (refreshes first)</string>
+			<key>label</key>
+			<string>Devices keyword</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>KDED_KEYWORD</string>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>default</key>
+				<string>/Applications/KDE Connect.app/Contents/MacOS/kdeconnect-cli</string>
+				<key>placeholder</key>
+				<string></string>
+				<key>required</key>
+				<true/>
+				<key>trim</key>
+				<true/>
+			</dict>
+			<key>description</key>
+			<string>Path to the kdeconnect-cli binary inside KDE Connect.app</string>
+			<key>label</key>
+			<string>kdeconnect-cli path</string>
+			<key>type</key>
+			<string>textfield</string>
+			<key>variable</key>
+			<string>KDECONNECT_CLI</string>
+		</dict>
+	</array>
+	<key>variables</key>
+	<dict>
+		<key>KDECONNECT_CLI</key>
+		<string>/Applications/KDE Connect.app/Contents/MacOS/kdeconnect-cli</string>
+		<key>KDEC_KEYWORD</key>
+		<string>kdec</string>
+		<key>KDED_KEYWORD</key>
+		<string>kded</string>
+	</dict>
+	<key>variablesdontexport</key>
+	<array/>
+	<key>version</key>
+	<string>0.2.0</string>
+	<key>webaddress</key>
+	<string>https://github.com/leonvogt/kde-connect-alfred-workflow</string>
 </dict>
 </plist>
