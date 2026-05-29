@@ -19,10 +19,11 @@ devices=$(kdec_list_devices || true)
 if [[ -z $devices ]]; then
   # Nothing reachable on the first try — ask the daemon to re-scan the network,
   # mirroring the app's Refresh button. Paired-but-offline devices often
-  # reconnect after this. kdec_list_devices already retries while the daemon
-  # warms up, so no extra sleep is needed.
+  # reconnect after this, but it can take several seconds, so poll with a larger
+  # budget (~5s) instead of the fast default — otherwise we'd give up before the
+  # device finishes reconnecting and wrongly report "no device reachable".
   "$KDECONNECT_CLI" --refresh >/dev/null 2>&1 || true
-  devices=$(kdec_list_devices || true)
+  devices=$(kdec_list_devices 10 0.5 || true)
 fi
 if [[ -z $devices ]]; then
   unreachable=$(kdec_list_paired_unreachable || true)

@@ -52,8 +52,11 @@ classify_payload() {
 # until it responds with a device list (or the budget runs out).
 kdec_list_devices() {
   [[ -x "$KDECONNECT_CLI" ]] || die "kdeconnect-cli not found at: $KDECONNECT_CLI"
+  # Poll budget is tunable: callers waiting on a reconnect after --refresh pass a
+  # larger budget, while the fast path uses the defaults below.
+  local max_attempts=${1:-6} interval=${2:-0.25}
   local raw out i
-  for (( i=0; i<6; i++ )); do
+  for (( i=0; i<max_attempts; i++ )); do
     raw=$("$KDECONNECT_CLI" --list-available --id-name-only 2>/dev/null || true)
     # Device IDs are 32 hex chars on Android/desktop; iOS uses an
     # underscore-separated UUID (e.g. 583305bd_64fe_43ef_af5a_e508c7581736).
@@ -65,8 +68,21 @@ kdec_list_devices() {
           printf "%s\t%s\n", id, name
         }')
     [[ -n $out ]] && { printf '%s\n' "$out"; return; }
-    sleep 0.25
+    sleep "$interval"
   done
+}
+
+# Wait until the given device id is reachable, or the budget runs out.
+# Used to give a freshly-refreshed daemon time to reconnect a paired device
+# before retrying a send.
+#   $1 device_id  $2 max_attempts (default 10)  $3 sleep interval (default 0.5)
+kdec_wait_reachable() {
+  local want=$1 max_attempts=${2:-10} interval=${3:-0.5} i
+  for (( i=0; i<max_attempts; i++ )); do
+    kdec_list_devices 1 0 | grep -q "^${want}"$'\t' && return 0
+    sleep "$interval"
+  done
+  return 1
 }
 
 # List paired-but-not-reachable device names, one per line.
@@ -191,6 +207,15 @@ kdec_send_and_report() {
   local device_id=$1 payload=$2 payload_type=$3 device_name=$4
   local out rc=0
   out=$(kdec_send "$device_id" "$payload" "$payload_type") || rc=$?
+  if (( rc != 0 )); then
+    # The daemon may have listed a stale device that just went offline, so the
+    # share plugin wasn't registered. Ask it to re-scan, wait briefly for the
+    # device to reconnect, then retry the send exactly once.
+    "$KDECONNECT_CLI" --refresh >/dev/null 2>&1 || true
+    kdec_wait_reachable "$device_id" 10 0.5 || true
+    rc=0
+    out=$(kdec_send "$device_id" "$payload" "$payload_type") || rc=$?
+  fi
   if (( rc == 0 )); then
     if [[ -n $out ]]; then
       printf 'Sent %s to %s\n' "$out" "$device_name"
