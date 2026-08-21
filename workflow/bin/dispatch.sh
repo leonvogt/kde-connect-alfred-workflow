@@ -1,7 +1,8 @@
 #!/bin/bash
 # Entry point after the Universal Action.
 #
-# Receives the payload as $1 (text, URL, or tab-separated file paths).
+# Receives the payload as $1 (text, URL, or tab-separated file paths) and an
+# optional payload type as $2, which overrides the classification.
 # Routes by reachable-device count:
 #   0 devices  → print error message (Notification node shows it)
 #   1 device   → send immediately
@@ -13,7 +14,7 @@ IFS=$'\n\t'
 source "$(dirname "$0")/_lib.sh"
 
 payload=${1-}
-payload_type=$(classify_payload "$payload")
+payload_type=${2:-$(classify_payload "$payload")}
 
 devices=$(kdec_list_devices || true)
 if [[ -z $devices ]]; then
@@ -45,10 +46,15 @@ if (( count == 1 )); then
   exit 0
 fi
 
-# 2+ devices: open the chooser. AppleScript strings are wrapped in double
-# quotes; backslashes and quotes inside the argument must be escaped.
-escaped=${payload//\\/\\\\}
+# 2+ devices: open the chooser. The external trigger carries a single string,
+# so the payload type rides on its first line; choose_device.sh splits it off.
+# AppleScript strings are wrapped in double quotes and cannot span lines, so
+# backslashes, quotes and newlines inside the argument must be escaped.
+escaped="$payload_type"$'\n'"$payload"
+escaped=${escaped//\\/\\\\}
 escaped=${escaped//\"/\\\"}
+escaped=${escaped//$'\n'/\\n}
+escaped=${escaped//$'\r'/\\r}
 /usr/bin/osascript <<EOF >/dev/null
 tell application id "com.runningwithcrayons.Alfred" to run trigger "choose" in workflow "$BUNDLE_ID" with argument "$escaped"
 EOF

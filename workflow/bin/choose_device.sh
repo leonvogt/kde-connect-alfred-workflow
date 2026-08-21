@@ -1,11 +1,12 @@
 #!/bin/bash
 # Script Filter: device chooser for the 2+ device case.
 #
-# Reads the payload from the `payload` workflow variable, which an
+# Reads the trigger argument from the `payload` workflow variable, which an
 # "Argument and Variables" utility sets from the "choose" external
 # trigger's argument before Alfred renders this Script Filter — that way
 # the payload is available here without pre-filling the chooser's search
-# field. Emits one item per reachable device; each item carries the
+# field. Its first line is the payload type dispatch.sh determined (see
+# there). Emits one item per reachable device; each item carries the
 # variables needed by send.sh down the pipeline.
 
 set -euo pipefail
@@ -13,8 +14,14 @@ IFS=$'\n\t'
 
 source "$(dirname "$0")/_lib.sh"
 
-payload=${payload:-}
-payload_type=$(classify_payload "$payload")
+trigger_arg=${payload:-}
+if [[ $trigger_arg == *$'\n'* ]]; then
+  payload_type=${trigger_arg%%$'\n'*}
+  payload=${trigger_arg#*$'\n'}
+else
+  payload=$trigger_arg
+  payload_type=$(classify_payload "$payload")
+fi
 
 emit_item() {
   local id=$1 name=$2

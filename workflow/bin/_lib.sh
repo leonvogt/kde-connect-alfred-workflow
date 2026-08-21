@@ -119,10 +119,10 @@ _kdec_normalize_path() {
 # Send a payload to a single device.
 #   $1 device_id
 #   $2 payload (text, url, or tab-separated file list)
-#   $3 payload_type (text|url|file)
+#   $3 payload_type (text|url|file|clipboard)
 # Prints exactly one stdout line:
 #   - on success (returns 0): a short descriptor of what was sent, or empty
-#     ("screenshot.png", "3 files"; empty for text/url)
+#     ("screenshot.png", "3 files", "clipboard"; empty for text/url)
 #   - on failure (returns 1): a cleaned-up reason
 # The CLI returns 0 even for non-existent files, so the file branch validates
 # existence itself instead of trusting the exit code.
@@ -135,14 +135,20 @@ kdec_send() {
   local stderr rc=0 success_desc=""
 
   _kdec_one() {
-    local flag=$1 arg=$2
-    stderr=$("$KDECONNECT_CLI" "$flag" "$arg" -d "$device_id" 2>&1 >/dev/null) || {
+    stderr=$("$KDECONNECT_CLI" "$@" -d "$device_id" 2>&1 >/dev/null) || {
       errors+=("$stderr")
       return 1
     }
   }
 
   case "$payload_type" in
+    # --send-clipboard goes through the clipboard plugin, so the receiving
+    # device stores the text verbatim. The share plugin would hand a URL to
+    # the browser instead. It always reads the Mac's current clipboard, so
+    # $payload is only what the caller snapshotted for display.
+    clipboard)
+      if _kdec_one --send-clipboard; then success_desc=clipboard; else rc=1; fi
+      ;;
     text) _kdec_one --share-text "$payload" || rc=1 ;;
     url)  _kdec_one --share      "$payload" || rc=1 ;;
     file)
